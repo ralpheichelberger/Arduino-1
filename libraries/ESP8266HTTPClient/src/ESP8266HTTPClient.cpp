@@ -277,7 +277,8 @@ void HTTPClient::setAuthorization(const char * user, const char * password)
         String auth = user;
         auth += ':';
         auth += password;
-        _base64Authorization = base64::encode(auth, false /* doNewLines */);
+        _base64Authorization = "Basic "
+        _base64Authorization+= base64::encode(auth, false /* doNewLines */);
     }
 }
 
@@ -856,7 +857,7 @@ bool HTTPClient::sendHeader(const char * type)
     }
 
     if (_base64Authorization.length()) {
-        header += F("\r\nAuthorization: Basic ");
+        header += F("\r\nAuthorization: ");
         header += _base64Authorization;
     }
 
